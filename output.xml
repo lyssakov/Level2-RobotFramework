@@ -1,0 +1,2311 @@
+g<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.10.12 on win32)" generated="20240405 08:27:54.700" rpa="true" schemaversion="4">
+<suite id="s1" name="Tasks" source="c:\Users\Trainingym\Documents\curso\pt2\my-rsb-robot\tasks.robot">
+<test id="s1-t1" name="Order robots from RobotSpareBin Industries Inc" line="16">
+<kw name="Open the robot order website">
+<kw name="Open Browser" library="RPA.Browser.Playwright">
+<arg>https://robotsparebinindustries.com/#/robot-order</arg>
+<arg>webkit</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Opens a new browser instance. Use this keyword for quick experiments or debugging sessions.</doc>
+<msg timestamp="20240405 08:28:07.294" level="WARN">Open Browser is for quick experimentation and debugging only. Use New Page for production.</msg>
+<msg timestamp="20240405 08:28:07.294" level="INFO">{"browser": "webkit", "headless": false, "chromiumSandbox": false, "devtools": false, "handleSIGHUP": true, "handleSIGINT": true, "handleSIGTERM": true, "slowMo": 0.0, "timeout": 30000.0, "tracesDir": "C:\\Users\\Trainingym\\Documents\\curso\\pt2\\my-rsb-robot\\browser\\traces\\703631ca-26d0-41b9-850c-3a7c6ecefe3a"}</msg>
+<msg timestamp="20240405 08:28:08.663" level="INFO">Successfully created browser with options: {"browser":"webkit","headless":false,"chromiumSandbox":false,"devtools":false,"handleSIGHUP":true,"handleSIGINT":true,"handleSIGTERM":true,"slowMo":0,"timeout":30000,"tracesDir":"C:\\Users\\Trainingym\\Documents\\curso\\pt2\\my-rsb-robot\\browser\\traces\\703631ca-26d0-41b9-850c-3a7c6ecefe3a"}</msg>
+<msg timestamp="20240405 08:28:08.663" level="INFO">{
+  "acceptDownloads": true,
+  "bypassCSP": true,
+  "forcedColors": "none",
+  "hideRfBrowser": "",
+  "ignoreHTTPSErrors": false,
+  "javaScriptEnabled": true,
+  "offline": false,
+  "reducedMotion": "no-preference",
+  "serviceWorkers": "allow",
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}</msg>
+<msg timestamp="20240405 08:28:08.695" level="INFO">Successfully created context. </msg>
+<msg timestamp="20240405 08:28:08.695" level="INFO">{'acceptDownloads': True, 'bypassCSP': True, 'forcedColors': 'none', 'hideRfBrowser': '', 'ignoreHTTPSErrors': False, 'javaScriptEnabled': True, 'offline': False, 'reducedMotion': 'no-preference', 'serviceWorkers': 'allow', 'viewport': {'height': 720, 'width': 1280}}</msg>
+<msg timestamp="20240405 08:28:09.620" level="INFO">Successfully initialized new page object and opened url: https://robotsparebinindustries.com/#/robot-order</msg>
+<status status="PASS" starttime="20240405 08:28:07.294" endtime="20240405 08:28:09.622"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:07.294" endtime="20240405 08:28:09.624"/>
+</kw>
+<kw name="Get orders">
+<var>${orders}</var>
+<kw name="Download" library="RPA.HTTP">
+<arg>https://robotsparebinindustries.com/orders.csv</arg>
+<arg>overwrite=True</arg>
+<doc>An alias for the ``HTTP Get`` keyword.</doc>
+<msg timestamp="20240405 08:28:09.638" level="INFO">Creating a new HTTP session</msg>
+<msg timestamp="20240405 08:28:09.638" level="INFO">Creating Session using : alias=rpasession_alias.httpsrobotsparebinindustries.com, url=https://robotsparebinindustries.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<status status="PASS" starttime="20240405 08:28:09.636" endtime="20240405 08:28:10.346"/>
+</kw>
+<kw name="Read table from CSV" library="RPA.Tables">
+<var>${orders}</var>
+<arg>orders.csv</arg>
+<doc>Read a CSV file as a table.</doc>
+<msg timestamp="20240405 08:28:10.356" level="INFO">${orders} = Table(columns=['Order number', 'Head', 'Body', 'Legs', 'Address'], rows=20)</msg>
+<status status="PASS" starttime="20240405 08:28:10.347" endtime="20240405 08:28:10.356"/>
+</kw>
+<return>
+<value>${orders}</value>
+<status status="PASS" starttime="20240405 08:28:10.356" endtime="20240405 08:28:10.356"/>
+</return>
+<msg timestamp="20240405 08:28:10.357" level="INFO">${orders} = Table(columns=['Order number', 'Head', 'Body', 'Legs', 'Address'], rows=20)</msg>
+<status status="PASS" starttime="20240405 08:28:09.634" endtime="20240405 08:28:10.357"/>
+</kw>
+<kw name="Fill the form">
+<arg>${orders}</arg>
+<for flavor="IN">
+<var>${order}</var>
+<value>@{orders}</value>
+<iter>
+<var name="${order}">{'Order number': '1', 'Head': '1', 'Body': '2', 'Legs': '3', 'Address': 'Address 123'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:10.360" endtime="20240405 08:28:10.683"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:10.359" endtime="20240405 08:28:10.683"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:10.684" endtime="20240405 08:28:10.746"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:10.747" endtime="20240405 08:28:11.021"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:11.023" level="INFO">Fills the text '3' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:11.022" endtime="20240405 08:28:11.068"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:11.069" level="INFO">Fills the text 'Address 123' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:11.068" endtime="20240405 08:28:11.103"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:11.104" endtime="20240405 08:28:11.333"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:11.336" endtime="20240405 08:28:11.628"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:11.334" endtime="20240405 08:28:11.628"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:11.645" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:11.629" endtime="20240405 08:28:11.646"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:11.647" endtime="20240405 08:28:11.647"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:11.647" endtime="20240405 08:28:11.648"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:11.646" endtime="20240405 08:28:11.648"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:11.646" endtime="20240405 08:28:11.648"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:11.648" endtime="20240405 08:28:11.965"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:10.359" endtime="20240405 08:28:11.966"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '2', 'Head': '4', 'Body': '1', 'Legs': '5', 'Address': 'Address 456'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:11.969" endtime="20240405 08:28:12.524"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:11.968" endtime="20240405 08:28:12.524"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:12.524" endtime="20240405 08:28:12.610"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:12.611" endtime="20240405 08:28:12.790"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:12.791" level="INFO">Fills the text '5' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:12.791" endtime="20240405 08:28:12.820"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:12.821" level="INFO">Fills the text 'Address 456' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:12.820" endtime="20240405 08:28:12.853"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:12.854" endtime="20240405 08:28:13.094"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:13.095" endtime="20240405 08:28:13.321"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:13.094" endtime="20240405 08:28:13.321"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:13.348" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:13.321" endtime="20240405 08:28:13.348"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:13.349" endtime="20240405 08:28:13.350"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:13.350" endtime="20240405 08:28:13.350"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:13.349" endtime="20240405 08:28:13.351"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:13.349" endtime="20240405 08:28:13.351"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:13.351" endtime="20240405 08:28:13.725"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:11.967" endtime="20240405 08:28:13.726"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '3', 'Head': '6', 'Body': '2', 'Legs': '3', 'Address': 'Address 789'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:13.728" endtime="20240405 08:28:14.180"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:13.727" endtime="20240405 08:28:14.181"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:14.181" endtime="20240405 08:28:14.218"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:14.219" endtime="20240405 08:28:14.460"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:14.462" level="INFO">Fills the text '3' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:14.461" endtime="20240405 08:28:14.499"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:14.500" level="INFO">Fills the text 'Address 789' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:14.499" endtime="20240405 08:28:14.524"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:14.524" endtime="20240405 08:28:14.694"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:14.696" endtime="20240405 08:28:14.932"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:14.695" endtime="20240405 08:28:14.932"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:14.938" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:14.932" endtime="20240405 08:28:14.938"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:14.940" endtime="20240405 08:28:14.940"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:14.941" endtime="20240405 08:28:14.941"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:14.938" endtime="20240405 08:28:14.941"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:14.938" endtime="20240405 08:28:14.942"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:14.942" endtime="20240405 08:28:15.252"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:13.727" endtime="20240405 08:28:15.252"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '4', 'Head': '2', 'Body': '3', 'Legs': '2', 'Address': 'Address 1'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:15.255" endtime="20240405 08:28:15.872"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:15.254" endtime="20240405 08:28:15.873"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:15.873" endtime="20240405 08:28:15.915"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:15.915" endtime="20240405 08:28:16.177"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:16.178" level="INFO">Fills the text '2' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:16.178" endtime="20240405 08:28:16.196"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:16.197" level="INFO">Fills the text 'Address 1' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:16.197" endtime="20240405 08:28:16.246"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:16.247" endtime="20240405 08:28:16.527"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:16.528" endtime="20240405 08:28:16.719"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:16.527" endtime="20240405 08:28:16.719"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:16.725" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:16.720" endtime="20240405 08:28:16.725"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:16.727" endtime="20240405 08:28:16.727"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:16.728" endtime="20240405 08:28:16.728"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:16.726" endtime="20240405 08:28:16.729"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:16.726" endtime="20240405 08:28:16.729"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:16.729" endtime="20240405 08:28:17.040"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:15.253" endtime="20240405 08:28:17.040"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '5', 'Head': '3', 'Body': '5', 'Legs': '1', 'Address': 'Address 2'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:17.044" endtime="20240405 08:28:17.440"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:17.043" endtime="20240405 08:28:17.440"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:17.441" endtime="20240405 08:28:17.483"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:17.484" endtime="20240405 08:28:17.719"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:17.720" level="INFO">Fills the text '1' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:17.719" endtime="20240405 08:28:17.782"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:17.784" level="INFO">Fills the text 'Address 2' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:17.783" endtime="20240405 08:28:17.814"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:17.814" endtime="20240405 08:28:18.107"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:18.110" endtime="20240405 08:28:18.430"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:18.108" endtime="20240405 08:28:18.431"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:18.439" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:18.431" endtime="20240405 08:28:18.439"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:18.440" endtime="20240405 08:28:18.441"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:18.441" endtime="20240405 08:28:18.442"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:18.440" endtime="20240405 08:28:18.442"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:18.440" endtime="20240405 08:28:18.442"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:18.442" endtime="20240405 08:28:18.754"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:17.041" endtime="20240405 08:28:18.755"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '6', 'Head': '1', 'Body': '6', 'Legs': '6', 'Address': 'Address 3'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:18.758" endtime="20240405 08:28:19.194"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:18.757" endtime="20240405 08:28:19.194"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:19.195" endtime="20240405 08:28:19.243"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:19.244" endtime="20240405 08:28:19.493"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:19.495" level="INFO">Fills the text '6' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:19.494" endtime="20240405 08:28:19.519"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:19.520" level="INFO">Fills the text 'Address 3' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:19.520" endtime="20240405 08:28:19.552"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:19.553" endtime="20240405 08:28:19.772"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:19.773" endtime="20240405 08:28:20.060"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:19.772" endtime="20240405 08:28:20.060"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:20.084" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:20.061" endtime="20240405 08:28:20.084"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:20.086" endtime="20240405 08:28:20.086"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:20.087" endtime="20240405 08:28:20.087"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:20.085" endtime="20240405 08:28:20.087"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:20.085" endtime="20240405 08:28:20.088"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:20.088" endtime="20240405 08:28:20.439"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:18.756" endtime="20240405 08:28:20.440"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '7', 'Head': '5', 'Body': '1', 'Legs': '5', 'Address': 'Address 4'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:20.442" endtime="20240405 08:28:20.831"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:20.441" endtime="20240405 08:28:20.832"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:20.832" endtime="20240405 08:28:20.873"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:20.873" endtime="20240405 08:28:21.084"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:21.086" level="INFO">Fills the text '5' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:21.085" endtime="20240405 08:28:21.124"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:21.125" level="INFO">Fills the text 'Address 4' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:21.124" endtime="20240405 08:28:21.151"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:21.151" endtime="20240405 08:28:21.404"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:21.405" endtime="20240405 08:28:21.679"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:21.404" endtime="20240405 08:28:21.679"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:21.691" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:21.679" endtime="20240405 08:28:21.691"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:21.692" endtime="20240405 08:28:21.692"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:21.693" endtime="20240405 08:28:21.693"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:21.692" endtime="20240405 08:28:21.693"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:21.692" endtime="20240405 08:28:21.693"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:21.694" endtime="20240405 08:28:22.018"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:20.441" endtime="20240405 08:28:22.019"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '8', 'Head': '2', 'Body': '3', 'Legs': '3', 'Address': 'Address 5'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:22.022" endtime="20240405 08:28:22.423"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:22.021" endtime="20240405 08:28:22.423"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:22.423" endtime="20240405 08:28:22.475"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:22.476" endtime="20240405 08:28:22.712"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:22.714" level="INFO">Fills the text '3' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:22.713" endtime="20240405 08:28:22.761"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:22.762" level="INFO">Fills the text 'Address 5' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:22.762" endtime="20240405 08:28:22.792"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:22.793" endtime="20240405 08:28:23.003"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:23.004" endtime="20240405 08:28:23.216"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:23.003" endtime="20240405 08:28:23.216"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:23.222" level="INFO">${alert_count} = 1</msg>
+<status status="PASS" starttime="20240405 08:28:23.217" endtime="20240405 08:28:23.222"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:23.224" endtime="20240405 08:28:23.500"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:23.508" level="INFO">${alert_count} = 1</msg>
+<status status="PASS" starttime="20240405 08:28:23.501" endtime="20240405 08:28:23.509"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:23.223" endtime="20240405 08:28:23.509"/>
+</iter>
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:23.510" endtime="20240405 08:28:23.736"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:23.742" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:23.736" endtime="20240405 08:28:23.742"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:23.509" endtime="20240405 08:28:23.742"/>
+</iter>
+<status status="PASS" starttime="20240405 08:28:23.223" endtime="20240405 08:28:23.743"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:23.743" endtime="20240405 08:28:24.043"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:22.020" endtime="20240405 08:28:24.044"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '9', 'Head': '3', 'Body': '2', 'Legs': '2', 'Address': 'Address 6'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:24.046" endtime="20240405 08:28:25.123"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:24.045" endtime="20240405 08:28:25.123"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:25.124" endtime="20240405 08:28:25.176"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:25.176" endtime="20240405 08:28:25.413"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:25.415" level="INFO">Fills the text '2' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:25.414" endtime="20240405 08:28:25.440"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:25.441" level="INFO">Fills the text 'Address 6' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:25.440" endtime="20240405 08:28:25.472"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:25.472" endtime="20240405 08:28:25.700"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:25.701" endtime="20240405 08:28:25.991"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:25.700" endtime="20240405 08:28:25.992"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:26.003" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:25.992" endtime="20240405 08:28:26.003"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:26.004" endtime="20240405 08:28:26.004"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:26.005" endtime="20240405 08:28:26.005"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:26.003" endtime="20240405 08:28:26.005"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:26.003" endtime="20240405 08:28:26.005"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:26.005" endtime="20240405 08:28:26.320"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:24.044" endtime="20240405 08:28:26.321"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '10', 'Head': '4', 'Body': '4', 'Legs': '2', 'Address': 'Address 7'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:26.323" endtime="20240405 08:28:26.729"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:26.323" endtime="20240405 08:28:26.730"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:26.731" endtime="20240405 08:28:26.769"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:26.770" endtime="20240405 08:28:27.008"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:27.009" level="INFO">Fills the text '2' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:27.009" endtime="20240405 08:28:27.034"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:27.035" level="INFO">Fills the text 'Address 7' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:27.034" endtime="20240405 08:28:27.058"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:27.059" endtime="20240405 08:28:27.314"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:27.315" endtime="20240405 08:28:27.578"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:27.314" endtime="20240405 08:28:27.579"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:27.597" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:27.579" endtime="20240405 08:28:27.597"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:27.598" endtime="20240405 08:28:27.598"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:27.598" endtime="20240405 08:28:27.599"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:27.597" endtime="20240405 08:28:27.599"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:27.597" endtime="20240405 08:28:27.599"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:27.599" endtime="20240405 08:28:27.872"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:26.322" endtime="20240405 08:28:27.872"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '11', 'Head': '6', 'Body': '6', 'Legs': '1', 'Address': 'Address 8'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:27.875" endtime="20240405 08:28:28.328"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:27.874" endtime="20240405 08:28:28.328"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:28.328" endtime="20240405 08:28:28.369"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:28.370" endtime="20240405 08:28:28.563"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:28.564" level="INFO">Fills the text '1' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:28.564" endtime="20240405 08:28:28.600"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:28.602" level="INFO">Fills the text 'Address 8' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:28.601" endtime="20240405 08:28:28.638"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:28.639" endtime="20240405 08:28:28.823"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:28.824" endtime="20240405 08:28:29.028"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:28.823" endtime="20240405 08:28:29.028"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:29.052" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:29.029" endtime="20240405 08:28:29.052"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:29.054" endtime="20240405 08:28:29.055"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:29.055" endtime="20240405 08:28:29.056"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:29.053" endtime="20240405 08:28:29.056"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:29.053" endtime="20240405 08:28:29.056"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:29.057" endtime="20240405 08:28:29.394"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:27.874" endtime="20240405 08:28:29.395"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '12', 'Head': '1', 'Body': '3', 'Legs': '3', 'Address': 'Address 9'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:29.398" endtime="20240405 08:28:29.767"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:29.397" endtime="20240405 08:28:29.767"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:29.768" endtime="20240405 08:28:29.809"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:29.810" endtime="20240405 08:28:30.050"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:30.051" level="INFO">Fills the text '3' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:30.050" endtime="20240405 08:28:30.068"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:30.069" level="INFO">Fills the text 'Address 9' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:30.068" endtime="20240405 08:28:30.102"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:30.102" endtime="20240405 08:28:30.381"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:30.382" endtime="20240405 08:28:30.694"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:30.381" endtime="20240405 08:28:30.694"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:30.706" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:30.695" endtime="20240405 08:28:30.706"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:30.707" endtime="20240405 08:28:30.708"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:30.708" endtime="20240405 08:28:30.709"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:30.706" endtime="20240405 08:28:30.709"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:30.706" endtime="20240405 08:28:30.709"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:30.710" endtime="20240405 08:28:31.087"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:29.396" endtime="20240405 08:28:31.088"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '13', 'Head': '1', 'Body': '5', 'Legs': '4', 'Address': 'Address A'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:31.091" endtime="20240405 08:28:31.514"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:31.090" endtime="20240405 08:28:31.514"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:31.514" endtime="20240405 08:28:31.553"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:31.553" endtime="20240405 08:28:31.712"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:31.713" level="INFO">Fills the text '4' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:31.713" endtime="20240405 08:28:31.739"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:31.740" level="INFO">Fills the text 'Address A' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:31.739" endtime="20240405 08:28:31.771"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:31.771" endtime="20240405 08:28:31.998"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:32.000" endtime="20240405 08:28:32.247"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:31.999" endtime="20240405 08:28:32.247"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:32.265" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:32.248" endtime="20240405 08:28:32.265"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:32.266" endtime="20240405 08:28:32.266"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:32.266" endtime="20240405 08:28:32.267"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:32.265" endtime="20240405 08:28:32.267"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:32.265" endtime="20240405 08:28:32.267"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:32.267" endtime="20240405 08:28:32.532"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:31.089" endtime="20240405 08:28:32.532"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '14', 'Head': '3', 'Body': '1', 'Legs': '5', 'Address': 'Address B'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:32.535" endtime="20240405 08:28:32.993"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:32.534" endtime="20240405 08:28:32.994"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:32.994" endtime="20240405 08:28:33.033"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:33.034" endtime="20240405 08:28:33.259"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:33.260" level="INFO">Fills the text '5' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:33.259" endtime="20240405 08:28:33.287"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:33.288" level="INFO">Fills the text 'Address B' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:33.287" endtime="20240405 08:28:33.312"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:33.313" endtime="20240405 08:28:33.572"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:33.574" endtime="20240405 08:28:33.856"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:33.573" endtime="20240405 08:28:33.857"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:33.873" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:33.858" endtime="20240405 08:28:33.873"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:33.875" endtime="20240405 08:28:33.875"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:33.876" endtime="20240405 08:28:33.876"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:33.873" endtime="20240405 08:28:33.876"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:33.873" endtime="20240405 08:28:33.876"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:33.876" endtime="20240405 08:28:34.209"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:32.533" endtime="20240405 08:28:34.210"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '15', 'Head': '3', 'Body': '2', 'Legs': '6', 'Address': 'Address C'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:34.213" endtime="20240405 08:28:34.667"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:34.212" endtime="20240405 08:28:34.667"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:34.668" endtime="20240405 08:28:34.704"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:34.705" endtime="20240405 08:28:34.903"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:34.905" level="INFO">Fills the text '6' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:34.904" endtime="20240405 08:28:34.929"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:34.930" level="INFO">Fills the text 'Address C' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:34.929" endtime="20240405 08:28:34.969"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:34.969" endtime="20240405 08:28:35.195"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:35.198" endtime="20240405 08:28:35.472"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:35.196" endtime="20240405 08:28:35.472"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:35.483" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:35.472" endtime="20240405 08:28:35.484"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:35.486" endtime="20240405 08:28:35.486"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:35.486" endtime="20240405 08:28:35.486"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:35.484" endtime="20240405 08:28:35.487"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:35.484" endtime="20240405 08:28:35.487"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:35.487" endtime="20240405 08:28:35.817"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:34.211" endtime="20240405 08:28:35.818"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '16', 'Head': '6', 'Body': '3', 'Legs': '6', 'Address': 'Address D'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:35.821" endtime="20240405 08:28:36.273"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:35.819" endtime="20240405 08:28:36.274"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:36.274" endtime="20240405 08:28:36.352"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:36.352" endtime="20240405 08:28:36.614"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:36.615" level="INFO">Fills the text '6' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:36.614" endtime="20240405 08:28:36.643"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:36.644" level="INFO">Fills the text 'Address D' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:36.643" endtime="20240405 08:28:36.675"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:36.675" endtime="20240405 08:28:36.939"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:36.940" endtime="20240405 08:28:37.327"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:36.939" endtime="20240405 08:28:37.328"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:37.339" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:37.329" endtime="20240405 08:28:37.339"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:37.340" endtime="20240405 08:28:37.340"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:37.340" endtime="20240405 08:28:37.341"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:37.339" endtime="20240405 08:28:37.341"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:37.339" endtime="20240405 08:28:37.341"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:37.342" endtime="20240405 08:28:37.615"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:35.819" endtime="20240405 08:28:37.616"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '17', 'Head': '5', 'Body': '4', 'Legs': '1', 'Address': 'Address E'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:37.618" endtime="20240405 08:28:38.011"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:37.617" endtime="20240405 08:28:38.011"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:38.012" endtime="20240405 08:28:38.057"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:38.057" endtime="20240405 08:28:38.256"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:38.258" level="INFO">Fills the text '1' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:38.257" endtime="20240405 08:28:38.285"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:38.286" level="INFO">Fills the text 'Address E' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:38.285" endtime="20240405 08:28:38.309"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:38.310" endtime="20240405 08:28:38.541"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:38.543" endtime="20240405 08:28:38.821"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:38.542" endtime="20240405 08:28:38.822"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:38.831" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:38.822" endtime="20240405 08:28:38.831"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:38.832" endtime="20240405 08:28:38.832"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:38.833" endtime="20240405 08:28:38.833"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:38.831" endtime="20240405 08:28:38.833"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:38.831" endtime="20240405 08:28:38.833"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:38.834" endtime="20240405 08:28:39.146"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:37.617" endtime="20240405 08:28:39.146"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '18', 'Head': '2', 'Body': '5', 'Legs': '1', 'Address': 'Address F'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:39.149" endtime="20240405 08:28:39.637"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:39.148" endtime="20240405 08:28:39.638"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:39.638" endtime="20240405 08:28:39.686"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:39.687" endtime="20240405 08:28:39.912"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:39.913" level="INFO">Fills the text '1' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:39.912" endtime="20240405 08:28:39.941"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:39.942" level="INFO">Fills the text 'Address F' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:39.942" endtime="20240405 08:28:40.019"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:40.020" endtime="20240405 08:28:40.239"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:40.240" endtime="20240405 08:28:40.506"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:40.240" endtime="20240405 08:28:40.507"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:40.515" level="INFO">${alert_count} = 1</msg>
+<status status="PASS" starttime="20240405 08:28:40.508" endtime="20240405 08:28:40.515"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:40.517" endtime="20240405 08:28:40.786"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:40.797" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:40.787" endtime="20240405 08:28:40.797"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:40.516" endtime="20240405 08:28:40.797"/>
+</iter>
+<status status="PASS" starttime="20240405 08:28:40.516" endtime="20240405 08:28:40.797"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:40.798" endtime="20240405 08:28:41.180"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:39.147" endtime="20240405 08:28:41.181"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '19', 'Head': '4', 'Body': '6', 'Legs': '2', 'Address': 'Address G'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:41.184" endtime="20240405 08:28:41.572"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:41.183" endtime="20240405 08:28:41.572"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:41.572" endtime="20240405 08:28:41.620"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:41.620" endtime="20240405 08:28:41.858"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:41.859" level="INFO">Fills the text '2' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:41.858" endtime="20240405 08:28:41.884"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:41.885" level="INFO">Fills the text 'Address G' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:41.884" endtime="20240405 08:28:41.909"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:41.909" endtime="20240405 08:28:42.140"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:42.142" endtime="20240405 08:28:42.427"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:42.141" endtime="20240405 08:28:42.427"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:42.432" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:42.427" endtime="20240405 08:28:42.432"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:42.433" endtime="20240405 08:28:42.433"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:42.434" endtime="20240405 08:28:42.434"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:42.432" endtime="20240405 08:28:42.434"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:42.432" endtime="20240405 08:28:42.434"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:42.435" endtime="20240405 08:28:42.808"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:41.182" endtime="20240405 08:28:42.809"/>
+</iter>
+<iter>
+<var name="${order}">{'Order number': '20', 'Head': '1', 'Body': '1', 'Legs': '5', 'Address': 'Address H'}</var>
+<kw name="Close the annoying modal">
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[type="button"].btn.btn-dark</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:42.811" endtime="20240405 08:28:43.218"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:42.810" endtime="20240405 08:28:43.219"/>
+</kw>
+<kw name="Select Options By" library="RPA.Browser.Playwright">
+<arg>select[id="head"]</arg>
+<arg>value</arg>
+<arg>${order}[Head]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Selects options from select element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:43.219" endtime="20240405 08:28:43.259"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>css=input[type="radio"][value="${order}[Body]"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:43.260" endtime="20240405 08:28:43.449"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[type="number"]</arg>
+<arg>${order}[Legs]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:43.450" level="INFO">Fills the text '5' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:43.449" endtime="20240405 08:28:43.476"/>
+</kw>
+<kw name="Fill Text" library="RPA.Browser.Playwright">
+<arg>input[id="address"]</arg>
+<arg>${order}[Address]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Clears and fills the given ``txt`` into the text field found by ``selector``.</doc>
+<msg timestamp="20240405 08:28:43.477" level="INFO">Fills the text 'Address H' in the given field.</msg>
+<status status="PASS" starttime="20240405 08:28:43.477" endtime="20240405 08:28:43.508"/>
+</kw>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="preview"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:43.509" endtime="20240405 08:28:43.739"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>5x</arg>
+<arg>3 sec</arg>
+<arg>Click</arg>
+<arg>button[id="order"]</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:43.740" endtime="20240405 08:28:43.946"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:43.740" endtime="20240405 08:28:43.946"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<msg timestamp="20240405 08:28:43.951" level="INFO">${alert_count} = 0</msg>
+<status status="PASS" starttime="20240405 08:28:43.946" endtime="20240405 08:28:43.952"/>
+</kw>
+<while condition="${alert_count} &gt; 0">
+<iter>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:43.953" endtime="20240405 08:28:43.954"/>
+</kw>
+<kw name="Get Element Count" library="RPA.Browser.Playwright">
+<var>${alert_count}</var>
+<arg>css=div[class].alert.alert-danger</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the count of elements found with ``selector``.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:43.954" endtime="20240405 08:28:43.955"/>
+</kw>
+<status status="NOT RUN" starttime="20240405 08:28:43.952" endtime="20240405 08:28:43.956"/>
+</iter>
+<status status="NOT RUN" starttime="20240405 08:28:43.952" endtime="20240405 08:28:43.956"/>
+</while>
+<kw name="Click" library="RPA.Browser.Playwright">
+<arg>button[id="order-another"]</arg>
+<tag>PageContent</tag>
+<tag>Setter</tag>
+<doc>Simulates mouse click on the element found by ``selector``.</doc>
+<status status="PASS" starttime="20240405 08:28:43.957" endtime="20240405 08:28:44.243"/>
+</kw>
+<status status="PASS" starttime="20240405 08:28:42.809" endtime="20240405 08:28:44.244"/>
+</iter>
+<status status="PASS" starttime="20240405 08:28:10.358" endtime="20240405 08:28:44.245"/>
+</for>
+<status status="PASS" starttime="20240405 08:28:10.358" endtime="20240405 08:28:44.245"/>
+</kw>
+<kw name="Save the receipt as a PDF file">
+<arg>${orders}</arg>
+<kw name="Set Field Value" library="RPA.PDF">
+<arg>Order Number</arg>
+<arg>${orders}[order]</arg>
+<doc>Set value for field with given name on the active document.</doc>
+<msg timestamp="20240405 08:28:44.249" level="FAIL">Accessing '${orders}[order]' failed: ValueError: Index is not a number: order</msg>
+<status status="FAIL" starttime="20240405 08:28:44.248" endtime="20240405 08:28:44.250"/>
+</kw>
+<kw name="Save Pdf" library="RPA.PDF">
+<arg>${OUTPUT_DIR}${/}order_results.pdf</arg>
+<doc>Save the contents of a pypdf reader to a new file.</doc>
+<status status="NOT RUN" starttime="20240405 08:28:44.251" endtime="20240405 08:28:44.251"/>
+</kw>
+<status status="FAIL" starttime="20240405 08:28:44.246" endtime="20240405 08:28:44.252"/>
+</kw>
+<status status="FAIL" starttime="20240405 08:28:07.279" endtime="20240405 08:28:44.286">Accessing '${orders}[order]' failed: ValueError: Index is not a number: order</status>
+</test>
+<doc>Orders robots from RobotSpareBin Industries Inc.
+Saves the order HTML receipt as a PDF file.
+Saves the screenshot of the ordered robot.
+Embeds the screenshot of the robot to the PDF receipt.
+Creates ZIP archive of the receipts and the images.</doc>
+<status status="FAIL" starttime="20240405 08:27:54.715" endtime="20240405 08:28:44.446"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tasks</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Tasks">Tasks</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20240405 08:28:02.311" level="WARN">Environment variable `RC_JAVA_ACCESS_BRIDGE_DLL` needs to be set to absolute path of `WindowsAccessBridge-64.dll`</msg>
+<msg timestamp="20240405 08:28:07.294" level="WARN">Open Browser is for quick experimentation and debugging only. Use New Page for production.</msg>
+</errors>
+</robot>
